@@ -1,8 +1,9 @@
 import android.deepdive.ksp.Dependencies
 
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
+    id("com.android.application")
+    id("kotlin-android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -33,6 +34,9 @@ android {
 
 dependencies {
 
+    implementation(project(":KSP"))
+    ksp(project(":KSP"))
+
     Dependencies.Kotlin.run {
         implementation(kotlinStdLib)
     }
@@ -55,4 +59,8 @@ dependencies {
         androidTestImplementation(junit)
         androidTestImplementation(espresso)
     }
+}
+
+ksp {
+    arg("option1", "value1")
 }

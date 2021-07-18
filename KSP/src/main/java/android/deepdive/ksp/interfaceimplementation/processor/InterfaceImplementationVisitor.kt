@@ -29,7 +29,6 @@ class InterfaceImplementationVisitor(
 
         }
 
-        @Suppress("DefaultLocale")
         override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
             logger.warn("@${annotationName} -> $classDeclaration 발견")
 

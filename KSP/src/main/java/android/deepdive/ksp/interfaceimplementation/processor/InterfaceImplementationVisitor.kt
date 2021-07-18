@@ -11,6 +11,10 @@ import android.deepdive.ksp.interfaceimplementation.processor.extensions.toAppen
 import com.squareup.kotlinpoet.*
 import java.util.*
 
+/**
+ * @author SODA1127
+ * [InterfaceImplementationProcessor]에서 사용되는 KSVisitor 클래스.
+ */
 class InterfaceImplementationVisitor(
     private val codeGenerator: CodeGenerator,
     private val logger: KSPLogger,
@@ -34,12 +38,21 @@ class InterfaceImplementationVisitor(
 
             val packageName = classDeclaration.packageName.asString()
             val className = classDeclaration.simpleName.asString()
+
+            /**
+             * [KSClassDeclaration.simpleName]과 동일한 이름으로 파일 생성하여
+             * Interface, Implemtation 클래스를 두개 작성하는 파일
+             */
             val file = codeGenerator.createNewFile(
                 dependencies = Dependencies(true, classDeclaration.containingFile!!),
                 packageName = packageName,
                 fileName = className
             )
 
+            /**
+             * Interface 정의를 한다.
+             * ex) [IExampleRepository]와 같이 `I`키워드가 Prefix로 붙게되어 클래스가 작성된다.
+             */
             val interfaceName = "I$className"
             val interfaceType = TypeSpec.interfaceBuilder(interfaceName)
                 .addFunctions(
@@ -63,10 +76,15 @@ class InterfaceImplementationVisitor(
                 .build()
             logger.warn("$interfaceName 생성 완료")
 
+            /**
+             * Implementation 정의를한다.
+             * ex) [ExampleRepositoryImpl]와 같이 `Impl`키워드가 Suffix로 붙게되어 클래스가 작성된다.
+             */
             val implementationName = "${className}Impl"
             val implementsType = TypeSpec.classBuilder(implementationName)
                 .addSuperinterface(ClassName.bestGuess("${packageName}.${interfaceName}"))
                 .primaryConstructor(
+                    // 생성자에는 구현될 함수가 있는 본래 클래스가 인자로 들어간다.
                     FunSpec.constructorBuilder()
                         .addParameter(
                             ParameterSpec.builder(
@@ -80,8 +98,7 @@ class InterfaceImplementationVisitor(
                     PropertySpec.builder(
                         className.lowercase(Locale.getDefault()),
                         ClassName.bestGuess("$packageName.$className")
-                    )
-                        .initializer(className.lowercase(Locale.getDefault()))
+                    ).initializer(className.lowercase(Locale.getDefault()))
                         .addModifiers(KModifier.PRIVATE)
                         .build()
                 )
@@ -102,6 +119,9 @@ class InterfaceImplementationVisitor(
                                 declare.parameters.joinToString(", ") { it.name!!.asString() }
                             val returnClassName =
                                 ClassName.bestGuess(declare.returnType?.resolve()?.declaration?.qualifiedName?.asString()!!)
+                            /**
+                             * 반환타입이 [Unit]인지, 아닌지에 따라 return 키워드를 사용한다.
+                             */
                             if (returnClassName != Unit::class.asClassName()) {
                                 builder.addStatement("return ${className.lowercase(Locale.getDefault())}.${declare.simpleName.asString()}($invokeParameters)")
                                 builder.returns(returnClassName)

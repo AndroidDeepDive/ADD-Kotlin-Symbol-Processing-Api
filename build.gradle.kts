@@ -1,13 +1,8 @@
-plugins {
-    kotlin("jvm") version "1.5.20" apply false
-}
-
 buildscript {
-    val kotlinVersion by extra("1.5.20")
+    val kotlinVersion by extra(android.deepdive.ksp.Dependencies.kotlinVersion)
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
     }
     dependencies {
         classpath(android.deepdive.ksp.Dependencies.ClassPath.androidGradle)

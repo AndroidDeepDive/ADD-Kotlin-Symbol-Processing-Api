@@ -8,8 +8,20 @@ object Dependencies {
     const val targetSdkVersion = 30
 
     const val kotlinVersion = "1.5.20"
+
+    const val androidGradleVersion = "4.2.2"
+
+    const val kspVersion = "1.5.20-1.0.0-beta04"
+
+    object ClassPath {
+        const val androidGradle = "com.android.tools.build:gradle:$androidGradleVersion"
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        const val ksp = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$kspVersion"
+    }
+
     object Kotlin {
         const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        const val poet = "com.squareup:kotlinpoet:1.7.2"
     }
 
     object AndroidX {

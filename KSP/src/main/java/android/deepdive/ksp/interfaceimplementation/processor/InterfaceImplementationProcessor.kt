@@ -6,23 +6,18 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.validate
 import android.deepdive.ksp.interfaceimplementation.InterfaceImplementation
 
-class InterfaceImplementationProcessor : SymbolProcessor {
-
-    private lateinit var codeGenerator: CodeGenerator
-    private lateinit var logger: KSPLogger
-
+/**
+ * @author SODA1127
+ * KSP를 이용한 SymbolProcessor 구현체이다.
+ */
+class InterfaceImplementationProcessor(
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger
+) : SymbolProcessor {
 
     companion object {
         private val annotationName = InterfaceImplementation::class.java.canonicalName
         private val filteringKeywords = arrayOf("equals", "hashCode", "toString", "<init>")
-    }
-
-    fun init(
-        codeGenerator: CodeGenerator,
-        logger: KSPLogger
-    ) {
-        this.codeGenerator = codeGenerator
-        this.logger = logger
     }
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
@@ -56,9 +51,7 @@ class InterfaceImplementationProcessor : SymbolProcessor {
 class AbstractionProcessorProvider : SymbolProcessorProvider {
 
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return InterfaceImplementationProcessor().apply {
-            init(environment.codeGenerator, environment.logger)
-        }
+        return InterfaceImplementationProcessor(environment.codeGenerator, environment.logger)
     }
 
 }

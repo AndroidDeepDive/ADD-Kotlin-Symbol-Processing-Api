@@ -1,19 +1,15 @@
-plugins {
-    kotlin("jvm") version "1.5.20" apply false
-}
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    val kotlin_version by extra("1.5.21")
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20")
-        classpath("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.5.20-1.0.0-beta04")
-        classpath(kotlin("gradle-plugin", version = "1.5.20"))
+        classpath(com.passionvirus.ksp.Dependencies.ClassPath.androidGradle)
+        classpath(com.passionvirus.ksp.Dependencies.ClassPath.kotlin)
+        classpath(com.passionvirus.ksp.Dependencies.ClassPath.ksp)
+        classpath(com.passionvirus.ksp.Dependencies.ClassPath.googleService)
     }
 }
 
@@ -21,10 +17,10 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
     }
 }
-
-//tasks.register("clean". Delete::class) {
-//    delete(rootProject.buildDir)
-//}
+/*
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+*/

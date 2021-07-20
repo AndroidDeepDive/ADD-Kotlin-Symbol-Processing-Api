@@ -1,4 +1,3 @@
-rootProject.name = "ksp"
-include(":Sample")
-
-include(":KSP")
+rootProject.name = "Ksp"
+include(":app")
+include(":buildprocessor")

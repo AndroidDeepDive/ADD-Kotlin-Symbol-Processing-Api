@@ -13,9 +13,11 @@ dependencies {
 
     Dependencies.Kotlin.run {
         implementation(kotlinStdLib)
+        implementation(poet)
     }
 
     Dependencies.Ksp.run {
         implementation(kspApi)
     }
+
 }

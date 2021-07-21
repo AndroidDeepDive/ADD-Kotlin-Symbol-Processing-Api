@@ -21,6 +21,28 @@ android {
     }
 
     buildTypes {
+
+        getByName("debug") {
+            sourceSets {
+                getByName("main") {
+                    java.srcDir(File("build/generated/ksp/debug/kotlin"))
+                }
+            }
+        }
+        getByName("release") {
+            minifyEnabled(false)
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            sourceSets {
+                getByName("main") {
+                    java.srcDir(File("build/generated/ksp/release/kotlin"))
+                }
+            }
+        }
+
     }
 
     compileOptions {
@@ -59,8 +81,4 @@ dependencies {
         androidTestImplementation(junit)
         androidTestImplementation(espresso)
     }
-}
-
-ksp {
-    arg("option1", "value1")
 }

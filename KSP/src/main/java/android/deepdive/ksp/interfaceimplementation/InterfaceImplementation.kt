@@ -1,0 +1,3 @@
+package android.deepdive.ksp.interfaceimplementation
+
+annotation class InterfaceImplementation

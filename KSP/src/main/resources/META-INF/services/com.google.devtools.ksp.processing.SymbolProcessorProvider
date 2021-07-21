@@ -1,1 +1,2 @@
 android.deepdive.ksp.builder.BuilderProcessorProvider
+android.deepdive.ksp.interfaceimplementation.processor.InterfaceImplementationProcessorProvider
